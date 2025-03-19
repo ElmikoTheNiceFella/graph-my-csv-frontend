@@ -1,10 +1,11 @@
 import './App.css'
+import { FileUpload } from './components'
 
-function App() {
+const App = () => {
 
   return (
     <>
-      hello world
+      <FileUpload />
     </>
   )
 }
