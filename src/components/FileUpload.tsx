@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { InputError } from "../types/fileUploadTypes";
+import { InputError, PropType } from "../types/fileUploadTypes";
 
-const FileUpload = () => {
+const FileUpload = ({ handleGeneration }:PropType) => {
 
   const [file, setFile] = useState<File|null>(null)
   const [error, setError] = useState<InputError>("NONE");
@@ -18,15 +18,19 @@ const FileUpload = () => {
       } else { // Success
         setFile(uploadedFile)
         setError("NONE")
+        return
       }
+      setFile(null)
     }
   }
 
-  return <>
-    <input type="file" onChange={handleFile} name="csv-upload" id="csv-upload" />
-    <p>{file?.size}&nbsp;{error}</p>
-  </>
-  
+  return (
+    <>
+      <input type="file" onChange={handleFile} name="csv-upload" id="csv-upload" />
+      <p>{file?.size}&nbsp;{error}</p>
+      <button onClick={() => handleGeneration(file)}>Generate Visualizations</button>
+    </>
+  )
 }
 
 export default FileUpload
