@@ -1,35 +1,40 @@
 import { useState } from "react"
-import { InputError } from "../types/fileUploadTypes";
-import GenerateButton from "./GenerateButton";
 
 const FileUpload = () => {
 
   const [file, setFile] = useState<File|null>(null)
-  const [error, setError] = useState<InputError>("NONE");
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const uploadedFile = e.target.files[0]
-      if (e.target.files.length > 1) { // Handle multiple files
-        setError("MULTIPLE_FILES")
-      } else if (uploadedFile?.type !== "text/csv") { // Handle non-CSV files
-        setError("WRONG_FORMAT")
-      } else if (uploadedFile?.size === 0) { // Handle empty CSV files
-        setError("EMPTY")
-      } else { // Success
-        setFile(uploadedFile)
-        setError("NONE")
-        return
-      }
-      setFile(null)
+  const handleSubmit = async(e:React.FormEvent) => {
+    e.preventDefault()
+    if (!file) return
+
+    const formData = new FormData()
+    formData.append("csv-file", file)
+
+    const response = await fetch(import.meta.env.VITE_ENDPOINT, {
+      method: 'POST',
+      body: formData
+    })
+
+    const reader = response?.body?.getReader()
+    if (!reader) return
+
+    const decoder = new TextDecoder()
+
+    while(true) {
+      const { done, value } = await reader.read()
+      if (done) break;
+      const chunk = decoder.decode(value)
+      console.log(chunk)
     }
   }
 
   return (
     <>
-      <input type="file" onChange={handleFile} name="csv-upload" id="csv-upload" />
-      <p>{file?.size}&nbsp;{error}</p>
-      <GenerateButton userFile={file} />
+      <form onSubmit={handleSubmit}>
+        <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} name="csv-upload" id="csv-upload" />
+        <button type="submit">Generate</button>
+      </form>
     </>
   )
 }

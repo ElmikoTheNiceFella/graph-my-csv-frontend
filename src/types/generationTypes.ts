@@ -1,1 +1,0 @@
-export type GenerationError = "NONE" | "NO_FILE"
