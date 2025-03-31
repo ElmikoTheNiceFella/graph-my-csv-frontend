@@ -11,7 +11,8 @@ const App = () => {
   return (
     <>
       <FileUpload setData={setData} setError={setError} />
-      {error[2] ? <Error error={error} /> : <RenderGraphs rawData={data} />}
+      {/* {error[2] === "" ? <Error error={error} /> : <RenderGraphs rawData={data} />} */}
+      <RenderGraphs rawData={data} />
     </>
   )
 }
