@@ -4,15 +4,20 @@ import { ChartPropsType } from '../../types/propsTypes'
 
 const LineChart: React.FC<ChartPropsType> = ({ data, info, getFrequency, transforms, usingFrequency }) => {
 
-  if (!usingFrequency) return <p className="graph-error">LLM hallucination error</p>
+  const gx = useRef(null)
+  const gy = useRef(null)
 
-  const gx = useRef(null);
-  const gy = useRef(null);
+  let frequencyArray
+  let xAxisData
+  let yAxisData
 
-  const frequencyArray = getFrequency(data[info['x-axis']])
-
-  const xAxisData = frequencyArray.map(v => v[0]) 
-  const yAxisData = frequencyArray.map(v => v[1])
+  if (usingFrequency) {
+    frequencyArray = getFrequency(data[info['x-axis']])
+    xAxisData = frequencyArray.map(v => v[0])
+    yAxisData = frequencyArray.map(v => v[1])
+  } else {
+    
+  }
 
   const extent = d3.extent(yAxisData)
   if (extent[0] === undefined || extent[1] === undefined) return <p className="graph-error">{info['x-axis']} Column is empty</p>

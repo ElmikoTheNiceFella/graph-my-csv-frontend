@@ -41,7 +41,7 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, getFrequency, transfor
           {tooltip.visible && (
             <div
               style={{
-                position: "absolute",
+                position: "fixed",
                 left: tooltip.x + 10,
                 top: tooltip.y + 10,
                 background: "black",
