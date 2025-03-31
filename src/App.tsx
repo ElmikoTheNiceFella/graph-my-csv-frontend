@@ -10,6 +10,7 @@ const App = () => {
 
   return (
     <>
+    <p>Work in progress... Estimated finish time: 1 april 2025</p>
       <FileUpload setData={setData} setError={setError} />
       {/* {error[2] === "" ? <Error error={error} /> : <RenderGraphs rawData={data} />} */}
       <RenderGraphs rawData={data} />

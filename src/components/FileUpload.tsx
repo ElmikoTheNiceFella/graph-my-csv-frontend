@@ -8,6 +8,10 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError }) => {
   const [result, setResult] = useState<string>("")
   const [status, setStatus] = useState<string>("")
   
+  /**
+   * Fetches data from the Back-end and provides the client with live status changes
+   * @param e Form event
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!file) return
@@ -42,6 +46,7 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError }) => {
     if (!success) {
       setError(chunk.split("_"))
     } else {
+      setStatus("Graphs successfully generated")
       setDone(true)
     }
   }
@@ -54,7 +59,6 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError }) => {
   })
   
   useEffect(() => {
-    
     let fileData = undefined;
     if (file) {
       readFile(file).then((res) => fileData = res).catch(err => setError(["ERROR", err, "500"]))

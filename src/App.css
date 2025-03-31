@@ -5,3 +5,11 @@
   --light: #EFDCAB;
   --white: #F2F6D0;
 }
+
+.bar {
+  fill: var(--black);
+}
+
+.axis {
+  color: var(--dark);
+}
