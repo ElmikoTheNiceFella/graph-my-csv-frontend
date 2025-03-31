@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import FileUploadImg from '../assets/file_upload.svg'
 import { FileUploadProps } from "../types/propsTypes"
 
 const FileUpload:React.FC<FileUploadProps> = ({ setData, setError }) => {
@@ -71,9 +72,10 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form id="upload-form" onSubmit={handleSubmit}>
+        <img src={FileUploadImg} width={100} alt="" />
         <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} name="csv-upload" id="csv-upload" />
-        <button type="submit">Generate</button>
+        <button id="generate-button" type="submit">Generate</button>
       </form>
     </>
   )

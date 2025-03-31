@@ -55,7 +55,7 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, getFrequency, transfor
               {tooltip.value[0]} <br/> {tooltip.value[1]}
             </div>
           )}
-          <svg style={{marginTop: "50px"}} width={transforms.w+transforms.ml} height={transforms.h+transforms.mb}>
+          <svg width={transforms.w+transforms.ml} height={transforms.h+transforms.mb}>
             <g ref={gx} className="axis" transform={`translate(0, ${transforms.h - transforms.mb})`} />
             <g ref={gy} className="axis" transform={`translate(${transforms.ml}, 0)`} />
             {frequencyArray.map((d, i) => 

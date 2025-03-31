@@ -6,6 +6,9 @@
   --light: #EFDCAB;
   --white: #F2F6D0;
 }
+body {
+  background-color: var(--white);
+}
 * {
   font-family: "Nunito Sans", sans-serif;
   font-optical-sizing: auto;
@@ -19,10 +22,50 @@ h1, h2, h3, h4, h5, h6 {
   font-optical-sizing: auto;
   font-style: normal;
 }
+#upload-form {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: auto;
+  padding: 24px;
+  background-color: var(--light);
+  gap: 24px;
+  align-items: center;
+}
+#generate-button {
+  all: unset;
+  cursor: pointer;
+  background-color: var(--dark);
+  color: var(--white);
+  height: 50px;
+  text-align: center;
+  width: 100%;
+}
+#csv-upload {
+  font-size: large;
+}
+#csv-upload::file-selector-button {
+  background-color: var(--dark);
+  color: var(--white);  
+  font-size: medium;
+  padding: 15px 30px;
+  border: none;
+  cursor: pointer;
+}
+
 .bar {
   fill: var(--black);
 }
 
 .axis {
   color: var(--dark);
+}
+
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+  margin: 48px 0px;
 }
