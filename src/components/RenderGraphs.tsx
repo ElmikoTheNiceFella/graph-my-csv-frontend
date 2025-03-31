@@ -49,6 +49,7 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
           <BarChart data={demoData[1]} info={obj} getFrequency={getFrequency} transforms={{ w: 600, h: 500, mt: 10, mr: 10, mb: 10, ml: 10}} />
         </div>
       )} */}
+      <p>Your data: {rawData[0]}...</p>
       <BarChart data={data} info={{
         "graph": "bar",
         "x-axis": "Company Name",

@@ -2,12 +2,11 @@ import { useEffect, useState } from "react"
 import FileUploadImg from '../assets/file_upload.svg'
 import { FileUploadProps } from "../types/propsTypes"
 
-const FileUpload:React.FC<FileUploadProps> = ({ setData, setError }) => {
+const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus }) => {
 
   const [file, setFile] = useState<File | null>(null)
   const [done, setDone] = useState<boolean>(false)
   const [result, setResult] = useState<string>("")
-  const [status, setStatus] = useState<string>("")
   
   /**
    * Fetches data from the Back-end and provides the client with live status changes
