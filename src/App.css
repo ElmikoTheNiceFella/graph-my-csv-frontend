@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 :root {
   --black: #313131;
   --dark: #443627;
@@ -5,7 +6,19 @@
   --light: #EFDCAB;
   --white: #F2F6D0;
 }
-
+* {
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100,
+    "YTLC" 500;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
 .bar {
   fill: var(--black);
 }
