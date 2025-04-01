@@ -14,6 +14,7 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus }) 
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setStatus("Reading file...")
     if (!file) return
     
     const formData = new FormData()
@@ -59,15 +60,16 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus }) 
   })
   
   useEffect(() => {
-    let fileData = undefined;
     if (file) {
-      readFile(file).then((res) => fileData = res).catch(err => setError(["ERROR", err, "500"]))
+      readFile(file).then((res) => {
+        if (done && res) {
+          setError(["NOERROR", "", "200"])
+          setData([result, (res as string).trim()])
+          console.log([result, res])
+        }
+      }).catch(err => setError(["ERROR", err, "500"]))
     }
-
-    if (done && fileData) {
-      setData([result, fileData])
-    }
-  }, [done])
+  }, [done, file, result, setData, setError])
 
   return (
     <>

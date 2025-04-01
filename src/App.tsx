@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import { FileUpload, RenderGraphs } from './components'
+import { FileUpload, RenderGraphs, Error } from './components'
 
 
 const App = () => {
@@ -9,14 +9,19 @@ const App = () => {
   const [error, setError] = useState<string[]>(["", "", ""])
   const [status, setStatus] = useState<string>("")
 
+  useEffect(() => {
+    console.log(error)
+    console.log(data)
+  }, [data, error])
+
   return (
     <>
-    <p>Work in progress... Estimated finish time: 2 april 2025</p>
+      <p>Work in progress... Estimated finish time: 2 april 2025</p>
       <FileUpload setData={setData} setError={setError} setStatus={setStatus} />
-      <p>{status}</p>
       <p>{error[1]}</p>
-      {/* {error[2] === "" ? <Error error={error} /> : <RenderGraphs rawData={data} />} */}
-      <RenderGraphs rawData={data} />
+      {error[0] === "NOERROR" ? <RenderGraphs rawData={data} /> :
+        error[0] === "ERROR" ? <Error error={error} /> :
+          <p>{status}</p>}
     </>
   )
 }

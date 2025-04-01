@@ -3,11 +3,11 @@ import { ErrorPropsTypes } from '../types/propsTypes'
 
 const Error: React.FC<ErrorPropsTypes> = ({ error }) => {
   return (
-    <>
-      {/* Error image */}
-      {/* Error message */}
-      <button>{error}</button>
-    </>
+    <div className='error'>
+      <h1>{error[2]}</h1>
+      <p>&nbsp;{error[1]}</p>
+      <button>Back</button>
+    </div>
   )
 }
 

@@ -6,7 +6,7 @@ type Tooltip = { visible: boolean, x: number, y: number, value: [string, number]
 
 const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequency }) => {
 
-  if (!usingFrequency) return <p className="graph-error">LLM hallucination error</p>
+  if (!usingFrequency) return <></>
 
   /**
    * Creates a frequency array, this function is shared between all types of graphs
@@ -28,13 +28,20 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequ
   const gx = useRef(null);
   const gy = useRef(null);
 
-  const frequencyArray = getFrequency(data[info['x-axis']])
+  
+  let frequencyArray
+  try {
+    frequencyArray = getFrequency(data[info['x-axis']])
+  } catch {
+    console.log(data, info['x-axis'], data[info['x-axis']])
+    return <></>
+  }
 
   const xAxisData = frequencyArray.map(v => v[0]) 
   const yAxisData = frequencyArray.map(v => v[1])
 
   const extent = d3.extent(yAxisData)
-  if (extent[0] === undefined || extent[1] === undefined) return <p className="graph-error">{info['x-axis']} Column is empty</p>
+  if (extent[0] === undefined || extent[1] === undefined) return <></>
 
   const x = d3.scaleBand(xAxisData, [transforms.ml, transforms.w - transforms.mr]);
   let y = d3.scaleLinear(extent, [transforms.h - transforms.mb, transforms.mt]);
@@ -51,7 +58,7 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequ
 
   return (
     <>
-      <div className="chart">
+      <div key={info['x-axis'] + " " + info['y-axis']} className="chart">
           <h2>{info.relationship}</h2>
           {tooltip.visible && (
             <div

@@ -53,14 +53,30 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
 }
 
-.bar, .line, .circle, .histogram-bar {
+.error {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bar, .circle, .histogram-bar {
   fill: var(--dark);
+}
+.line {
+  stroke: var(--dark);
 }
 .histogram-bar {
   stroke: var(--white);
 }
 
 .axis {
+  color: var(--dark);
+}
+
+.graph-error {
+  text-align: center;
+  padding: 24px;
+  font-style: italic;
   color: var(--dark);
 }
 

@@ -6,28 +6,26 @@ type Tooltip = { visible: boolean, x: number, y: number, value: [string, string]
 
 const ScatterplotChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequency, getPairs, extractNumber }) => {
 
-  if (usingFrequency) return <p className="graph-error">LLM hallucination error</p>
-  if (!extractNumber || !getPairs) return <p className="graph-error">Missing functions</p>
+  if (usingFrequency) return <></>
+  if (!extractNumber || !getPairs) return <></>
   const [tooltip, setTooltip] = useState<Tooltip>({ visible: false, x: 0, y: 0, value: ["", ""] })
 
   const gx = useRef(null);
   const gy = useRef(null);
 
-  if (!data[info['x-axis']] || !data[info['y-axis']]) return <p className="graph-error">{info['x-axis']} Column is empty</p>
-
-  console.log(data[info['y-axis']])
+  if (!data[info['x-axis']] || !data[info['y-axis']]) return <></>
 
   const uncheckedXAxisData = data[info['x-axis']]?.map((d:string) => extractNumber(d || ""))
   const uncheckedYAxisData = data[info['y-axis']]?.map((d: string) => extractNumber(d || ""))
-  if (uncheckedXAxisData.includes("Error") || uncheckedYAxisData.includes("Error")) return <p className="graph-error">Wrong chart by LLM hallucinations</p>
+  if (uncheckedXAxisData.includes("Error") || uncheckedYAxisData.includes("Error")) return <></>
 
   const xAxisData = uncheckedXAxisData as number[]
   const yAxisData = uncheckedYAxisData as number[]
 
   const xExtent = d3.extent(xAxisData)
-  if (xExtent[0] === undefined || xExtent[1] === undefined) return <p className="graph-error">{info['x-axis']} Column is empty</p>
+  if (xExtent[0] === undefined || xExtent[1] === undefined) return <></>
   const yExtent = d3.extent(yAxisData)
-  if (yExtent[0] === undefined || yExtent[1] === undefined) return <p className="graph-error">{info['y-axis']} Column is empty</p>
+  if (yExtent[0] === undefined || yExtent[1] === undefined) return <></>
 
   let x = d3.scaleLinear(xExtent, [transforms.ml, transforms.w - transforms.mr]);
   let y = d3.scaleLinear(yExtent, [transforms.h - transforms.mb, transforms.mt]);
@@ -52,7 +50,7 @@ const ScatterplotChart: React.FC<ChartPropsType> = ({ data, info, transforms, us
 
   return (
     <>
-      <div className="chart">
+      <div key={info['x-axis'] + " " + info['y-axis']} className="chart">
           <h2>{info.relationship}</h2>
           {tooltip.visible && (
             <div

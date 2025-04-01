@@ -4,8 +4,8 @@ import { ChartPropsType } from '../../types/propsTypes'
 
 const LineChart: React.FC<ChartPropsType> = ({ data, info, extractNumber, transforms, usingFrequency }) => {
 
-  if (usingFrequency) return <p className="graph-error">LLM hallucination error</p>
-  if (!extractNumber) return <p className="graph-error">Missing parameter</p>
+  if (usingFrequency) return <></>
+  if (!extractNumber) return <></>
 
   /**
    * Converts date string to a date object
@@ -22,17 +22,17 @@ const LineChart: React.FC<ChartPropsType> = ({ data, info, extractNumber, transf
   const gy = useRef(null)
 
   const xData = data[info['x-axis']].map((str: string) => normalizeDate(str))
-  if (xData[0] === undefined || xData[1] === undefined) return <p className="graph-error">{info['x-axis']} Column is empty or Unknown date format</p>
+  if (xData[0] === undefined || xData[1] === undefined) return <></>
   const times = xData[0] === undefined || xData[1] === undefined ? [new Date(), new Date()] : xData
   const yAxisData = data[info['y-axis']].map((d: string) => extractNumber(d))
 
   let xExtent = d3.extent(times)
   if (xExtent[0] === undefined || xExtent[1] === undefined) xExtent = [new Date(), new Date()]
 
-  if (yAxisData.includes("Error")) return <p className="graph-error">Wrong chart by LLM hallucinations</p>
+  if (yAxisData.includes("Error")) return <></>
 
   const yExtent = d3.extent(yAxisData as number[])
-  if (yExtent[0] === undefined || yExtent[1] === undefined) return <p className="graph-error">{info['y-axis']} Column is empty</p>
+  if (yExtent[0] === undefined || yExtent[1] === undefined) return <></>
 
   const x = d3.scaleTime(xExtent, [transforms.ml, transforms.w - transforms.mr]);
   let y = d3.scaleLinear(yExtent, [transforms.h - transforms.mb, transforms.mt]);
@@ -51,12 +51,12 @@ const LineChart: React.FC<ChartPropsType> = ({ data, info, extractNumber, transf
   useEffect(() => { if (gy.current) d3.select(gy.current as SVGGElement).call(d3.axisLeft(y)) }, [gy, y]);
 
   return (
-    <div className="chart">
+    <div key={info['x-axis'] + " " + info['y-axis']} className="chart">
       <h2>{info.relationship}</h2>
       <svg style={{ marginTop: "50px" }} width={transforms.w + transforms.ml} height={transforms.h + transforms.mb}>
         <g ref={gx} className="axis" transform={`translate(0, ${transforms.h - transforms.mb})`} />
         <g ref={gy} className="axis" transform={`translate(${transforms.ml}, 0)`} />
-        <path className="line" d={line(lineData) || ""} stroke="#443627" />
+        <path className="line"  fill="none" d={line(lineData) || ""} />
       </svg>
     </div>
   )

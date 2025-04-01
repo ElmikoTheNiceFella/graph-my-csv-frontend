@@ -6,22 +6,22 @@ type Tooltip = { visible: boolean, x: number, y: number, value: [string, number]
 
 const HistogramChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequency, extractNumber }) => {
 
-  if (!usingFrequency) return <p className="graph-error">LLM hallucination error</p>
-  if (!extractNumber) return <p className="graph-error">Missing function</p>
+  if (!usingFrequency) return <></>
+  if (!extractNumber) return <></>
   const [tooltip, setTooltip] = useState<Tooltip>({ visible: false, x: 0, y: 0, value: ["", 0] })
 
   const gx = useRef(null);
   const gy = useRef(null);
 
-  if (!data[info['x-axis']]) return <p className="graph-error">{info['x-axis']} Column is empty</p>
+  if (!data[info['x-axis']]) return <></>
 
   const uncheckedXAxisData = data[info['x-axis']]?.map((d:string) => extractNumber(d || ""))
-  if (uncheckedXAxisData.includes("Error")) return <p className="graph-error">Wrong chart by LLM hallucinations</p>
+  if (uncheckedXAxisData.includes("Error")) return <></>
 
   const xAxisData = uncheckedXAxisData as number[]
 
   const xExtent = d3.extent(xAxisData)
-  if (xExtent[0] === undefined || xExtent[1] === undefined) return <p className="graph-error">{info['x-axis']} Column is empty</p>
+  if (xExtent[0] === undefined || xExtent[1] === undefined) return <></>
 
 
   let x = d3.scaleLinear(xExtent, [transforms.ml, transforms.w - transforms.mr]);
@@ -47,7 +47,7 @@ const HistogramChart: React.FC<ChartPropsType> = ({ data, info, transforms, usin
 
   return (
     <>
-      <div className="chart">
+      <div key={info['x-axis'] + " " + info['y-axis']} className="chart">
           <h2>{info.relationship}</h2>
           {tooltip.visible && (
             <div
