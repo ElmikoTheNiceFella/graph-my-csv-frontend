@@ -16,7 +16,7 @@ const App = () => {
 
   return (
     <>
-      <p>Work in progress... Estimated finish time: 2 april 2025</p>
+      <p>The functionality is done, UI Work in progress... Estimated finish time: 2 april 2025</p>
       <FileUpload setData={setData} setError={setError} setStatus={setStatus} />
       <p>{error[1]}</p>
       {error[0] === "NOERROR" ? <RenderGraphs rawData={data} /> :
