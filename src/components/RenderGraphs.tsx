@@ -1,8 +1,8 @@
-import { useMemo } from "react"
 import { RenderGraphsPropsType } from "../types/propsTypes"
-import { demoData } from "./demoData"
 import { BarChart, LineChart, ScatterplotChart } from "./charts"
 import HistogramChart from "./charts/HistogramChart"
+
+type DataType = { 'graph': string, 'y-axis': string, 'x-axis': string, 'relationship': string, 'time-format'?: string | null }
 
 const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
 
@@ -53,16 +53,66 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
     return result
   }
 
-  const data = useMemo(() => dataToJson(demoData[1][0]), [demoData])
+  const data = dataToJson(rawData[1])
+
+  let llmResponse = []
+  if (rawData[0]) llmResponse = JSON.parse(rawData[0])
+
   const defaultTransforms = { w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 100, p: 4 }
 
   return (
     <>
-      {/* {demoData[0].map((obj, i) => 
-        <div className="graph" key={"graph-"+(i+1)}>
-          <BarChart data={demoData[1]} info={obj} getFrequency={getFrequency} transforms={{ w: 600, h: 500, mt: 10, mr: 10, mb: 10, ml: 10}} />
-        </div>
-      )} */}
+      {llmResponse.map((plot:DataType, i:number) => 
+        {
+          plot.graph.includes("bar") ?
+            <BarChart data={data} info={{
+              "graph": "bar",
+              "x-axis": "Company Name",
+              "y-axis": "frequency",
+              "relationship": "Shows the distribution of mobile phone models across different companies."
+            }}
+              transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }}
+              usingFrequency={true} />
+        : plot.graph.includes("line") ?
+            <LineChart
+              usingFrequency={false}
+              data={data}
+              info={{
+                "graph": "line",
+                "x-axis": "Period",
+                "y-axis": "Average_cost",
+                "relationship": "Average cost trend over time.  Illustrates how the average cost fluctuates across periods.",
+                "time-format": "%m.%d.%Y"
+              }}
+              transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }} />
+        : plot.graph.includes("scatter") ?
+            <ScatterplotChart data={data}
+              info={{
+                "graph": "scatterplot",
+                "x-axis": "Average_cost",
+                "y-axis": "Revenue",
+                "relationship": "Relationship between average cost and revenue.  Investigates if higher costs correlate with revenue changes."
+              }}
+              getPairs={getPairs}
+              extractNumber={extractNumber}
+              transforms={defaultTransforms}
+              usingFrequency={false} />
+        : plot.graph.includes("hist") ?
+            <HistogramChart data={data}
+              info={{
+                "graph": "histogram",
+                "x-axis": "Age",
+                "y-axis": "frequency",
+                "relationship": "This would show the distribution of ages. You could see the average age, the spread of ages, and any potential outliers."
+              }}
+              getPairs={getPairs}
+              extractNumber={extractNumber}
+              transforms={defaultTransforms}
+              usingFrequency={true}
+            />
+        : <p className="graph-error">No Valid Graph</p>
+        }
+      )}
       <p>Your data: {rawData[0]}...</p>
       {/* <BarChart data={data} info={{
         "graph": "bar",
@@ -94,18 +144,18 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
         extractNumber={extractNumber}
         transforms={defaultTransforms}
         usingFrequency={false} /> */}
-        <HistogramChart data={data}
+        {/* <HistogramChart data={data}
           info={{
             "graph": "histogram",
-            "x-axis": "YearsExperience",
+            "x-axis": "Age",
             "y-axis": "frequency",
-            "relationship": "This would show the distribution of experience. You could see the most common experience levels and the spread.",
+            "relationship": "This would show the distribution of ages. You could see the average age, the spread of ages, and any potential outliers."
           }}
           getPairs={getPairs}
           extractNumber={extractNumber}
           transforms={defaultTransforms}
-          usingFrequency={false}
-        />
+          usingFrequency={true}
+        /> */}
     </>
   )
 }

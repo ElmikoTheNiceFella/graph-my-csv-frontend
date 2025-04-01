@@ -53,8 +53,11 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
 }
 
-.bar, .line, .circle {
-  fill: var(--black);
+.bar, .line, .circle, .histogram-bar {
+  fill: var(--dark);
+}
+.histogram-bar {
+  stroke: var(--white);
 }
 
 .axis {

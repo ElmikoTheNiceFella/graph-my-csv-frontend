@@ -36,7 +36,7 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus }) 
       const { done, value } = await reader.read()
       if (done) break
       chunk = decoder.decode(value)
-      if (success || chunk && chunk.includes('[')) {
+      if (success || (chunk && chunk.includes('['))) {
         success = true
         setResult(p => p + chunk.trim())
       } else {
