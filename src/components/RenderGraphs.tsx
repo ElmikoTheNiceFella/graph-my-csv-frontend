@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { RenderGraphsPropsType } from "../types/propsTypes"
 import { demoData } from "./demoData"
 import BarChart from "./graphs/BarChart"
+import LineChart from "./graphs/LineChart"
 
 const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
 
@@ -19,7 +20,7 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
     for (let i = 0; i < head.length; i++) {
       result[head[i]] = Array(rows.length - 1)
       for (let j = 1; j < rows.length; j++) {
-        if (rows[j][i]) result[head[i]][j] = rows[j][i]
+        if (rows[j][i]) result[head[i]][j-1] = rows[j][i]
       }
     }
     return result
@@ -50,13 +51,25 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
         </div>
       )} */}
       <p>Your data: {rawData[0]}...</p>
-      <BarChart data={data} info={{
+      {/* <BarChart data={data} info={{
         "graph": "bar",
         "x-axis": "Company Name",
         "y-axis": "frequency",
         "relationship": "Shows the distribution of mobile phone models across different companies."
-      }} getFrequency={getFrequency} transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }}
-        usingFrequency={true} />
+      }}
+        getFrequency={getFrequency} 
+        transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }}
+        usingFrequency={true} /> */}
+      <LineChart 
+        data={data}
+        info={{
+          "graph": "line",
+          "x-axis": "Period",
+          "y-axis": "Average_cost",
+          "relationship": "Average cost trend over time.  Illustrates how the average cost fluctuates across periods.",
+          "time-format": "%m.%d.%Y"
+        }}
+        transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }} />
     </>
   )
 }
