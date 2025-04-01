@@ -4,9 +4,24 @@ import { ChartPropsType } from '../../types/propsTypes'
 
 type Tooltip = { visible: boolean, x: number, y: number, value: [string, number] }
 
-const BarChart: React.FC<ChartPropsType> = ({ data, info, getFrequency, transforms, usingFrequency }) => {
+const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequency }) => {
 
-  if (!usingFrequency || !getFrequency) return <p className="graph-error">LLM hallucination error</p>
+  if (!usingFrequency) return <p className="graph-error">LLM hallucination error</p>
+
+  /**
+   * Creates a frequency array, this function is shared between all types of graphs
+   * @param arr Array of raw repeated data
+   * @returns {[string, number][]} String array in this format: [Value, Frequency]
+   */
+  const getFrequency = (arr: string[]): [string, number][] => {
+    let freqObj: { [key: string]: number } = {}
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === undefined) continue
+      freqObj[arr[i]] = freqObj[arr[i]] === undefined ? 1 : freqObj[arr[i]] + 1
+    }
+    const result = Object.keys(freqObj).map(key => [key, freqObj[key]])
+    return result as [string, number][]
+  }
 
   const [tooltip, setTooltip] = useState<Tooltip>({ visible: false, x: 0, y: 0, value: ["", 0] })
 

@@ -1,8 +1,8 @@
 import { useMemo } from "react"
 import { RenderGraphsPropsType } from "../types/propsTypes"
 import { demoData } from "./demoData"
-import BarChart from "./charts/BarChart"
-import LineChart from "./charts/LineChart"
+import { BarChart, LineChart, ScatterplotChart } from "./charts"
+import HistogramChart from "./charts/HistogramChart"
 
 const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
 
@@ -20,28 +20,41 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
     for (let i = 0; i < head.length; i++) {
       result[head[i]] = Array(rows.length - 1)
       for (let j = 1; j < rows.length; j++) {
-        if (rows[j][i]) result[head[i]][j-1] = rows[j][i]
+        if (rows[j][i]) result[head[i]][j - 1] = rows[j][i]
       }
     }
     return result
   }
 
   /**
-   * Creates a frequency array, this function is shared between all types of graphs
-   * @param arr Array of raw repeated data
-   * @returns {[string, number][]} String array in this format: [Value, Frequency]
+   * This function mainly removes units of measure from a string
+   * @param value
+   * @returns {number | string} the numeric part of the string
    */
-  const getFrequency = (arr: string[]): [string, number][] => {
-    let freqObj: { [key: string]: number } = {}
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === undefined) continue
-      freqObj[arr[i]] = freqObj[arr[i]] === undefined ? 1 : freqObj[arr[i]]+1
+  const extractNumber = (value: string) => {
+    const result = value.match(/[0-9]+(\.[0-9]+)?/)
+    if (result === null) {
+      return "Error"
+    } else {
+      return +result[0]
     }
-    const result = Object.keys(freqObj).map(key => [key, freqObj[key]])
-    return result as [string, number][]
+  }
+
+  /**
+   * Combines elements of 2 arrays into one array of pairs
+   * @param arr1 First array
+   * @param arr2 Second array
+   * @returns {{ x:number, y:number }}Array of pairs of elements from the 2 arrays
+   */
+  const getPairs = (arr1: number[], arr2: number[]) => {
+    const limit = arr1.length <= arr2.length ? arr1.length : arr2.length
+    let result: { x: number, y: number }[] = Array(limit)
+    for (let i = 0; i < limit; i++) result[i] = { x: arr1[i], y: arr2[i] }
+    return result
   }
 
   const data = useMemo(() => dataToJson(demoData[1][0]), [demoData])
+  const defaultTransforms = { w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 100, p: 4 }
 
   return (
     <>
@@ -57,10 +70,10 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
         "y-axis": "frequency",
         "relationship": "Shows the distribution of mobile phone models across different companies."
       }}
-        getFrequency={getFrequency} 
         transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }}
         usingFrequency={true} /> */}
       {/* <LineChart 
+        usingFrequency={false}
         data={data}
         info={{
           "graph": "line",
@@ -70,6 +83,29 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
           "time-format": "%m.%d.%Y"
         }}
         transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }} /> */}
+      {/* <ScatterplotChart data={data}
+        info={{
+          "graph": "scatterplot",
+          "x-axis": "Average_cost",
+          "y-axis": "Revenue",
+          "relationship": "Relationship between average cost and revenue.  Investigates if higher costs correlate with revenue changes."
+        }}
+        getPairs={getPairs}
+        extractNumber={extractNumber}
+        transforms={defaultTransforms}
+        usingFrequency={false} /> */}
+        <HistogramChart data={data}
+          info={{
+            "graph": "histogram",
+            "x-axis": "YearsExperience",
+            "y-axis": "frequency",
+            "relationship": "This would show the distribution of experience. You could see the most common experience levels and the spread.",
+          }}
+          getPairs={getPairs}
+          extractNumber={extractNumber}
+          transforms={defaultTransforms}
+          usingFrequency={false}
+        />
     </>
   )
 }

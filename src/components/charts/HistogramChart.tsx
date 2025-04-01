@@ -4,9 +4,9 @@ import { ChartPropsType } from '../../types/propsTypes'
 
 type Tooltip = { visible: boolean, x: number, y: number, value: [string, string] }
 
-const ScatterplotChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequency, getPairs, extractNumber }) => {
+const HistogramChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequency, getPairs, extractNumber }) => {
 
-  if (usingFrequency) return <p className="graph-error">LLM hallucination error</p>
+  if (!usingFrequency) return <p className="graph-error">Poggers</p>
   if (!extractNumber || !getPairs) return <p className="graph-error">Missing functions</p>
   const [tooltip, setTooltip] = useState<Tooltip>({ visible: false, x: 0, y: 0, value: ["", ""] })
 
@@ -46,7 +46,7 @@ const ScatterplotChart: React.FC<ChartPropsType> = ({ data, info, transforms, us
   useEffect(() => { if (gx.current) d3.select(gx.current as SVGGElement).call(d3.axisBottom(x)) }, [gx, x]);
   useEffect(() => { if (gy.current) d3.select(gy.current as SVGGElement).call(d3.axisLeft(y)) }, [gy, y]);
 
-  const handleTooltip = (e:React.MouseEvent<SVGCircleElement, MouseEvent>, data:{x:number, y:number}) => {
+  const handleTooltip = (e:React.MouseEvent<SVGRectElement, MouseEvent>, data:{x:number, y:number}) => {
     setTooltip(() => ({ visible: true, x: e.clientX, y: e.clientY, value: [info['y-axis'] + ": " + data.y, info['x-axis'] + ": " + data.x] }))
   }
 
@@ -75,12 +75,12 @@ const ScatterplotChart: React.FC<ChartPropsType> = ({ data, info, transforms, us
           <g ref={gx} className="axis" transform={`translate(0, ${transforms.h - transforms.mb})`} />
           <g ref={gy} className="axis" transform={`translate(${transforms.ml}, 0)`} />
             {result.map((d, i) => 
-              <circle key={info['x-axis']+" "+info['y-axis']+i} 
+              <rect key={info['x-axis']+" "+info['y-axis']+i} 
                     className="circle"
-                    cx={x(d.x)} 
-                    cy={y(d.y)-transforms.mb} 
-                    r={5}
-                    fill="black"
+                    x={x(d[0])}
+                    y={y(d[1]) - transforms.mb}
+                    width={x.bandwidth() - transforms.p}
+                    height={transforms.h - y(d[1])}
                     onMouseEnter={(e) => handleTooltip(e, d)}
                     onMouseMove={(e) => handleTooltip(e, d)}
                     onMouseLeave={() => setTooltip({ visible: false, x: 0, y: 0, value: ["", ""] })} />)}
@@ -90,4 +90,4 @@ const ScatterplotChart: React.FC<ChartPropsType> = ({ data, info, transforms, us
   )
 }
 
-export default ScatterplotChart
+export default HistogramChart

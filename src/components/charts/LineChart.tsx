@@ -2,7 +2,10 @@ import * as d3 from "d3";
 import React, { useRef, useEffect } from 'react'
 import { ChartPropsType } from '../../types/propsTypes'
 
-const LineChart: React.FC<ChartPropsType> = ({ data, info, transforms }) => {
+const LineChart: React.FC<ChartPropsType> = ({ data, info, extractNumber, transforms, usingFrequency }) => {
+
+  if (usingFrequency) return <p className="graph-error">LLM hallucination error</p>
+  if (!extractNumber) return <p className="graph-error">Missing parameter</p>
 
   /**
    * Converts date string to a date object
@@ -13,15 +16,6 @@ const LineChart: React.FC<ChartPropsType> = ({ data, info, transforms }) => {
     const date = d3.timeParse(info["time-format"]!)(dateStr);
     if (date) return date;
     throw new Error("Unknown date format: " + dateStr);
-  }
-
-  const extractNumber = (d: string) => {
-    const result = d.match(/[0-9]+(\.[0-9]+)?/)
-    if (result === null) {
-      return "Error"
-    } else {
-      return +result[0]
-    }
   }
 
   const gx = useRef(null)
@@ -62,7 +56,7 @@ const LineChart: React.FC<ChartPropsType> = ({ data, info, transforms }) => {
       <svg style={{ marginTop: "50px" }} width={transforms.w + transforms.ml} height={transforms.h + transforms.mb}>
         <g ref={gx} className="axis" transform={`translate(0, ${transforms.h - transforms.mb})`} />
         <g ref={gy} className="axis" transform={`translate(${transforms.ml}, 0)`} />
-        <path d={line(lineData) || ""} fill="none" stroke="#443627" />
+        <path className="line" d={line(lineData) || ""} stroke="#443627" />
       </svg>
     </div>
   )

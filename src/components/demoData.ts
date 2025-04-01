@@ -1,68 +1,49 @@
-type DataType = [{ 'graph': string, 'y-axis': string, 'x-axis': string, 'relationship': string }[], [string]] 
+type DataType = [{ 'graph': string, 'y-axis': string, 'x-axis': string, 'relationship': string, 'time-format'?: string|null }[], [string]] 
 
 // Second element is put in an array to be passed by reference, since the string can be huge
 
 export const demoData: DataType = [
   [
     {
-      "graph": "line",
-      "x-axis": "Period",
-      "y-axis": "Revenue",
-      "relationship": "Revenue trend over time. Shows how revenue changes across different periods."
-    },
-    {
-      "graph": "line",
-      "x-axis": "Period",
-      "y-axis": "Sales_quantity",
-      "relationship": "Sales quantity trend over time. Shows how sales volume changes across different periods."
-    },
-    {
-      "graph": "line",
-      "x-axis": "Period",
-      "y-axis": "Average_cost",
-      "relationship": "Average cost trend over time.  Illustrates how the average cost fluctuates across periods."
-    },
-    {
-      "graph": "line",
-      "x-axis": "Period",
-      "y-axis": "The_average_annual_payroll_of_the_region",
-      "relationship": "Payroll trend over time.  Shows the changes in average annual payroll across periods."
+      "graph": "scatterplot",
+      "x-axis": "YearsExperience",
+      "y-axis": "Salary",
+      "relationship": "There is likely a positive correlation between years of experience and salary, meaning as experience increases, salary tends to increase. However, the relationship may not be perfectly linear and could plateau at a certain point of experience.",
+      "time-format": null
     },
     {
       "graph": "scatterplot",
-      "x-axis": "Sales_quantity",
-      "y-axis": "Revenue",
-      "relationship": "Correlation between sales quantity and revenue.  Helps understand if higher sales lead to higher revenue."
+      "x-axis": "Age",
+      "y-axis": "Salary",
+      "relationship": "There might be a positive correlation between age and salary in the early to middle years, as experience and career progression increase. However, this may plateau or even slightly decrease in later years as the employee reaches retirement age. The relationship could also be weaker than experience vs salary.",
+      "time-format": null
     },
     {
       "graph": "scatterplot",
-      "x-axis": "Average_cost",
-      "y-axis": "Revenue",
-      "relationship": "Relationship between average cost and revenue.  Investigates if higher costs correlate with revenue changes."
+      "x-axis": "Age",
+      "y-axis": "YearsExperience",
+      "relationship": "There is a positive correlation. As employees age, so does their years of experience.  This relationship is almost guaranteed, but the rate will vary.",
+      "time-format": null
     },
     {
-      "graph": "scatterplot",
-      "x-axis": "Average_cost",
-      "y-axis": "Sales_quantity",
-      "relationship": "Relationship between average cost and sales quantity.  Examines if cost affects sales volume."
+      "graph": "histogram",
+      "x-axis": "Salary",
+      "y-axis": "frequency",
+      "relationship": "This would show the distribution of salaries. You could identify the most common salary ranges, the spread of salaries, and potential skewness (e.g., whether there are many low salaries or very high salaries).",
+      "time-format": null
     },
     {
-      "graph": "scatterplot",
-      "x-axis": "The_average_annual_payroll_of_the_region",
-      "y-axis": "Revenue",
-      "relationship": "Correlation between average payroll and revenue. This shows if payroll increase leads to revenue increase"
+      "graph": "histogram",
+      "x-axis": "Age",
+      "y-axis": "frequency",
+      "relationship": "This would show the distribution of ages. You could see the average age, the spread of ages, and any potential outliers.",
+      "time-format": null
     },
     {
-      "graph": "scatterplot",
-      "x-axis": "The_average_annual_payroll_of_the_region",
-      "y-axis": "Sales_quantity",
-      "relationship": "Correlation between average payroll and sales quantity. This shows if payroll increase leads to increase sales quantity"
-    },
-    {
-      "graph": "scatterplot",
-      "x-axis": "The_average_annual_payroll_of_the_region",
-      "y-axis": "Average_cost",
-      "relationship": "Correlation between average payroll and average cost.  This relationship explain is changes in payroll are correlated with average cost"
+      "graph": "histogram",
+      "x-axis": "YearsExperience",
+      "y-axis": "frequency",
+      "relationship": "This would show the distribution of experience. You could see the most common experience levels and the spread.",
     }
   ],
   [`Period,Revenue,Sales_quantity,Average_cost,The_average_annual_payroll_of_the_region
@@ -129,6 +110,5 @@ export const demoData: DataType = [
 01.01.2020,56288300.87,27184,2070.64085013243,29044998
 01.02.2020,40225243.264,23509,1711.05718082437,29044998
 01.03.2020,50022165.2325,32569,1535.88274839571,29044998
-01.04.2020,52320692.9428,26615,1965.83479026113,29044998
-`]
+01.04.2020,52320692.9428,26615,1965.83479026113,29044998`]
 ]
