@@ -57,11 +57,14 @@ const LineChart: React.FC<ChartPropsType> = ({ data, info, transforms }) => {
   useEffect(() => { if (gy.current) d3.select(gy.current as SVGGElement).call(d3.axisLeft(y)) }, [gy, y]);
 
   return (
-    <svg style={{ marginTop: "50px" }} width={transforms.w + transforms.ml} height={transforms.h + transforms.mb}>
-      <g ref={gx} className="axis" transform={`translate(0, ${transforms.h - transforms.mb})`} />
-      <g ref={gy} className="axis" transform={`translate(${transforms.ml}, 0)`} />
-      <path d={line(lineData) || ""} fill="none" stroke="#443627" />
-    </svg>
+    <div className="chart">
+      <h2>{info.relationship}</h2>
+      <svg style={{ marginTop: "50px" }} width={transforms.w + transforms.ml} height={transforms.h + transforms.mb}>
+        <g ref={gx} className="axis" transform={`translate(0, ${transforms.h - transforms.mb})`} />
+        <g ref={gy} className="axis" transform={`translate(${transforms.ml}, 0)`} />
+        <path d={line(lineData) || ""} fill="none" stroke="#443627" />
+      </svg>
+    </div>
   )
 }
 

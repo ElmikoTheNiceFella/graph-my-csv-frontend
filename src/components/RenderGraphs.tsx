@@ -1,8 +1,8 @@
 import { useMemo } from "react"
 import { RenderGraphsPropsType } from "../types/propsTypes"
 import { demoData } from "./demoData"
-import BarChart from "./graphs/BarChart"
-import LineChart from "./graphs/LineChart"
+import BarChart from "./charts/BarChart"
+import LineChart from "./charts/LineChart"
 
 const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
 
@@ -60,7 +60,7 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
         getFrequency={getFrequency} 
         transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }}
         usingFrequency={true} /> */}
-      <LineChart 
+      {/* <LineChart 
         data={data}
         info={{
           "graph": "line",
@@ -69,7 +69,7 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
           "relationship": "Average cost trend over time.  Illustrates how the average cost fluctuates across periods.",
           "time-format": "%m.%d.%Y"
         }}
-        transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }} />
+        transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }} /> */}
     </>
   )
 }

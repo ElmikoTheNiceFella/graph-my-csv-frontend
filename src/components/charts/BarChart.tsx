@@ -6,7 +6,7 @@ type Tooltip = { visible: boolean, x: number, y: number, value: [string, number]
 
 const BarChart: React.FC<ChartPropsType> = ({ data, info, getFrequency, transforms, usingFrequency }) => {
 
-  if (!usingFrequency) return <p className="graph-error">LLM hallucination error</p>
+  if (!usingFrequency || !getFrequency) return <p className="graph-error">LLM hallucination error</p>
 
   const [tooltip, setTooltip] = useState<Tooltip>({ visible: false, x: 0, y: 0, value: ["", 0] })
 
@@ -36,7 +36,7 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, getFrequency, transfor
 
   return (
     <>
-      <div className="bar-chart">
+      <div className="chart">
           <h2>{info.relationship}</h2>
           {tooltip.visible && (
             <div
