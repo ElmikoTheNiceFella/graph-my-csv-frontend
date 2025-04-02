@@ -3,7 +3,7 @@ type StringStateFunction = React.Dispatch<React.SetStateAction<string>>
 type StringArrStateFunction = React.Dispatch<React.SetStateAction<string[]>>
 
 // Props Types
-export type FileUploadProps = { setData: StringArrStateFunction, setError: StringArrStateFunction, setStatus:StringStateFunction, status:string, error:string }
+export type FileUploadProps = { setData: StringArrStateFunction, setError: StringArrStateFunction, setStatus:StringStateFunction, status:string, error:string, token:string }
 
 export type ErrorPropsTypes = { error: string[] }
 

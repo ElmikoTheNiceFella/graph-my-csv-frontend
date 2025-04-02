@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import FileUploadImg from '../assets/file_upload.svg'
 import { FileUploadProps } from "../types/propsTypes"
 
-const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, status, error }) => {
+const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, status, error, token }) => {
 
   const [file, setFile] = useState<File | null>(null)
   const [done, setDone] = useState<boolean>(false)
@@ -22,6 +22,11 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
     
     const response = await fetch(import.meta.env.VITE_ENDPOINT, {
       method: 'POST',
+      credentials: "include",
+      headers: {
+        "Content-Type": "text/csv",
+        "X-CSRFToken": token,
+      },
       body: formData
     })
     
