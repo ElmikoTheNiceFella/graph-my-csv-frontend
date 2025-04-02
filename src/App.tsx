@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { FileUpload, RenderGraphs, Error } from './components'
-
+import { FileUpload, RenderGraphs, Error, Loading } from './components'
+import LoadingImage from './assets/loading.svg'
 
 const App = () => {
 
@@ -16,9 +16,11 @@ const App = () => {
 
   return (
     <>
-      <p>The functionality is done, UI Work in progress... Estimated finish time: 2 april 2025</p>
-      <FileUpload setData={setData} setError={setError} setStatus={setStatus} />
-      <p>{error[1]}</p>
+      {/* <p>The functionality is done, UI Work in progress... Estimated finish time: 2 april 2025</p> */}
+      {!status && <FileUpload setData={setData} setError={setError} setStatus={setStatus} />}
+
+      {!error[0] && status && <Loading image={LoadingImage} status={status} />}
+
       {error[0] === "NOERROR" ? <RenderGraphs rawData={data} /> :
         error[0] === "ERROR" ? <Error error={error} /> :
           <p>{status}</p>}

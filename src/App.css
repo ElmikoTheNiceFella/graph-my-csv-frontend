@@ -73,10 +73,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--dark);
 }
 
-.graph-error {
+.end {
   text-align: center;
   padding: 24px;
-  font-style: italic;
   color: var(--dark);
 }
 
@@ -87,4 +86,44 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   align-items: center;
   margin: 48px 0px;
+}
+
+.loading {
+  display: grid;
+  place-content: center;
+  margin: auto;
+  height: 100dvh;
+  p {
+    font-size: large;
+    padding: 24px;
+    text-align: center;
+  }
+}
+.loading-animation {
+  position: relative;
+  height: 100px;
+  width: fit-content;
+}
+@property --t {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.loading-circle {
+  --t: 0deg;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: var(--orange);
+  border-radius: 50%;
+  
+  /* Infinity motion */
+  transform: translate(calc(50% + cos(var(--t)) * 85px + 50px + 12.5px), calc(50% + sin(var(--t)) * cos(var(--t)) * 90px + 17.5px));
+
+  animation: infinityLoop 2s linear infinite;
+}
+
+@keyframes infinityLoop {
+  0% { --t: 0deg; }
+  100% { --t: 360deg; }
 }

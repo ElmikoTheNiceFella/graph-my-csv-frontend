@@ -115,7 +115,7 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
           />
       : <p className="graph-error">No Valid Graph</p>
       )}
-      <p><i>End</i></p>
+      <p className="end"><i>End</i></p>
     </>
   )
 }

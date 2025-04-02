@@ -15,3 +15,4 @@ export type ChartPropsType = { data: { [key:string]: any[] }, // Formatted data 
                                getPairs?: (arr1:number[], arr2:number[]) => {x:number, y:number}[], // Combines elements of 2 arrays
                                transforms: { w:number, h:number, mt:number, mr:number, mb:number, ml:number, p:number }, // [width, height, marginTop, marginRight, marginBottom, marginLeft]
                                usingFrequency?: boolean } // Wether we want the frequency or a relationship between 2 columns
+export type LoadingPropsType = { image: string, status: string }
