@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import FileUploadImg from '../assets/file_upload.svg'
 import { FileUploadProps } from "../types/propsTypes"
 
-const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus }) => {
+const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, status }) => {
 
   const [file, setFile] = useState<File | null>(null)
   const [done, setDone] = useState<boolean>(false)
@@ -73,7 +73,7 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus }) 
 
   return (
     <>
-      <form id="upload-form" onSubmit={handleSubmit}>
+      <form style={{ display: status ? "none" : "flex" }} id="upload-form" onSubmit={handleSubmit}>
         <img src={FileUploadImg} width={100} alt="" />
         <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} name="csv-upload" id="csv-upload" />
         <button id="generate-button" type="submit">Generate</button>

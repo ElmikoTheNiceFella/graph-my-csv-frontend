@@ -17,7 +17,7 @@ const App = () => {
   return (
     <>
       {/* <p>The functionality is done, UI Work in progress... Estimated finish time: 2 april 2025</p> */}
-      {!status && <FileUpload setData={setData} setError={setError} setStatus={setStatus} />}
+      <FileUpload setData={setData} setError={setError} setStatus={setStatus} status={status} />
 
       {!error[0] && status && <Loading image={LoadingImage} status={status} />}
 
