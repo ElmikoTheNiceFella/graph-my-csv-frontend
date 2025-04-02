@@ -89,7 +89,7 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
         <img src={FileUploadImg} width={100} alt="" />
         <label id="upload-button" htmlFor="csv-upload">{(file && fileNameClip(file.name)) || "Choose a file"}</label>
         <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} name="csv-upload" id="csv-upload" hidden/>
-        
+        <a href="https://www.kaggle.com/datasets?search=clean+dataset" target="_blank">Test it with random datasets from <strong>Kaggle</strong></a>
         {file && <button id="generate-button" type="submit">Generate</button>}
       </form>
     </>

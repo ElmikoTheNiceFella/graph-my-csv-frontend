@@ -28,6 +28,13 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   height: 100dvh;
+  a, a:visited {
+    all: unset;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--orange);
+  }
 }
 #upload-button {
   background-color: var(--dark);
