@@ -8,13 +8,6 @@ const App = () => {
   const [data, setData] = useState<string[]>(["", ""])
   const [error, setError] = useState<string[]>(["", "", ""])
   const [status, setStatus] = useState<string>("")
-  const [token, setToken] = useState<string>("")
-
-  useEffect(() => {
-    fetch(import.meta.env.VITE_ENDPOINT + "/csrf-token", { credentials: "include" })
-      .then(res => res.json())
-      .then(data => setToken(data.csrf_token));
-  }, []);
 
   useEffect(() => {
     console.log(error)
@@ -24,7 +17,7 @@ const App = () => {
   return (
     <>
       {/* <p>The functionality is done, UI Work in progress... Estimated finish time: 2 april 2025</p> */}
-      <FileUpload setData={setData} token={token} setError={setError} setStatus={setStatus} status={status} error={error[0]} />
+      <FileUpload setData={setData} setError={setError} setStatus={setStatus} status={status} error={error[0]} />
 
       {!error[0] && status && <Loading image={LoadingImage} status={status} />}
 
