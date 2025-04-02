@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import FileUploadImg from '../assets/file_upload.svg'
 import { FileUploadProps } from "../types/propsTypes"
 
-const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, status }) => {
+const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, status, error }) => {
 
   const [file, setFile] = useState<File | null>(null)
   const [done, setDone] = useState<boolean>(false)
@@ -52,6 +52,18 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
     }
   }
 
+  /**
+   * clips file name
+   * @param fileName file name
+   * @returns {string} clipped file name
+   */
+  const fileNameClip = (fileName: string) => fileName.substring(0, 10) + "..." + "csv"
+
+  /**
+   * Reads the uploaded file
+   * @param file uploaded file
+   * @returns {Promise} reading file result
+   */
   const readFile = (file:File) => new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => resolve(reader.result)
@@ -73,10 +85,12 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
 
   return (
     <>
-      <form style={{ display: status ? "none" : "flex" }} id="upload-form" onSubmit={handleSubmit}>
+      <form style={{ display: status || error ? "none" : "flex" }} id="upload-form" onSubmit={handleSubmit}>
         <img src={FileUploadImg} width={100} alt="" />
-        <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} name="csv-upload" id="csv-upload" />
-        <button id="generate-button" type="submit">Generate</button>
+        <label id="upload-button" htmlFor="csv-upload">{(file && fileNameClip(file.name)) || "Choose a file"}</label>
+        <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} name="csv-upload" id="csv-upload" hidden/>
+        
+        {file && <button id="generate-button" type="submit">Generate</button>}
       </form>
     </>
   )

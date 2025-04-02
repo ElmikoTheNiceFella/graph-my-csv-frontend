@@ -1,6 +1,7 @@
+import React from 'react'
 import { LoadingPropsType } from '../types/propsTypes'
 
-const Loading = ({ image, status }: LoadingPropsType ) => {
+const Loading: React.FC<LoadingPropsType> = ({ image, status } ) => {
   return (
     <div className='loading'>
       <div className='loading-animation'>

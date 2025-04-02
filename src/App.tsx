@@ -17,13 +17,13 @@ const App = () => {
   return (
     <>
       {/* <p>The functionality is done, UI Work in progress... Estimated finish time: 2 april 2025</p> */}
-      <FileUpload setData={setData} setError={setError} setStatus={setStatus} status={status} />
+      <FileUpload setData={setData} setError={setError} setStatus={setStatus} status={status} error={error[0]} />
 
       {!error[0] && status && <Loading image={LoadingImage} status={status} />}
 
       {error[0] === "NOERROR" ? <RenderGraphs rawData={data} /> :
         error[0] === "ERROR" ? <Error error={error} /> :
-          <p>{status}</p>}
+          <></>}
     </>
   )
 }

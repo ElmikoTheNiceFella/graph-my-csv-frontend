@@ -24,11 +24,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 #upload-form {
   flex-direction: column;
-  width: fit-content;
-  margin: auto;
-  padding: 24px;
   gap: 24px;
   align-items: center;
+  justify-content: center;
+  height: 100dvh;
+}
+#upload-button {
+  background-color: var(--dark);
+  color: var(--white);
+  width: 200px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+  cursor: pointer;
+  text-align: center;
 }
 #generate-button {
   all: unset;
@@ -37,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--white);
   height: 50px;
   text-align: center;
-  width: 100%;
+  width: 200px;
 }
 #csv-upload {
   font-size: large;
@@ -91,7 +102,6 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: auto;
   height: 100dvh;
   p {
     font-size: large;
@@ -121,6 +131,31 @@ h1, h2, h3, h4, h5, h6 {
   transform: translate(calc(50% + cos(var(--t)) * 85px + 50px + 12.5px), calc(50% + sin(var(--t)) * cos(var(--t)) * 90px + 17.5px));
 
   animation: infinityLoop 2s linear infinite;
+}
+
+.error {
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    font-size: 72px;
+  }
+  p {
+    text-align: center;
+  }
+  a {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark);
+    color: var(--white);
+    font-size: large;
+    height: 50px;
+    width: 200px;
+    text-align: center;
+  }
 }
 
 @keyframes infinityLoop {

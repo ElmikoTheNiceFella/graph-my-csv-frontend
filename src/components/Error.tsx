@@ -6,7 +6,7 @@ const Error: React.FC<ErrorPropsTypes> = ({ error }) => {
     <div className='error'>
       <h1>{error[2]}</h1>
       <p>&nbsp;{error[1]}</p>
-      <button>Back</button>
+      <a href='http://localhost:5173/'>Back</a>
     </div>
   )
 }
