@@ -89,7 +89,7 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
         <p id="description">Upload a csv file and we will generate either histogram, bar, line, or scatter plots based on the given data.<br/>This app is built with Gemini Flash 2.0 Lite</p>
         <label id="upload-button" htmlFor="csv-upload">
           <span id="choose-file-button">Choose a file</span>
-          <span>{(file && fileNameClip(file.name)) || "No file selected"}</span>
+          <span id="file-name">{(file && fileNameClip(file.name)) || "No file selected"}</span>
         </label>
         <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} name="csv-upload" id="csv-upload" hidden/>
         <a href="https://www.kaggle.com/datasets?search=clean+dataset" target="_blank">Test it with random datasets from <strong>Kaggle</strong></a>

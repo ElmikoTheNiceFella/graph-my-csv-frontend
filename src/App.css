@@ -61,6 +61,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 12px 24px;
   border-radius: 99px;
 }
+#file-name { color: var(--dark); }
 #button-placeholder {
   height: 50px;
   width: 200px;
