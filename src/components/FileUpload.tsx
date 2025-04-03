@@ -24,7 +24,7 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
       method: 'POST',
       body: formData
     })
-    
+
     const reader = response?.body?.getReader()
     if (!reader) return
     
@@ -57,7 +57,7 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
    * @param fileName file name
    * @returns {string} clipped file name
    */
-  const fileNameClip = (fileName: string) => fileName.substring(0, 10) + "..." + "csv"
+  const fileNameClip = (fileName: string) => fileName.length > 10 ? fileName.substring(0, 10) + "..." + "csv" : fileName
 
   /**
    * Reads the uploaded file
@@ -86,11 +86,17 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
   return (
     <>
       <form style={{ display: status || error ? "none" : "flex" }} id="upload-form" onSubmit={handleSubmit}>
-        <img src={FileUploadImg} width={100} alt="" />
-        <label id="upload-button" htmlFor="csv-upload">{(file && fileNameClip(file.name)) || "Choose a file"}</label>
+        <h1 id="title">Graph My CSV</h1>
+        <p id="description">Upload a csv file and we will generate either histogram, bar, line, or scatter plots based on the given data.<br/>This app is built with Gemini Flash 2.0 Lite</p>
+        {/* <img src={FileUploadImg} width={100} alt="" /> */}
+        <label id="upload-button" htmlFor="csv-upload">
+          <span id="choose-file-button">Choose a file</span>
+          <span>{(file && fileNameClip(file.name)) || "No file selected"}</span>
+        </label>
         <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} name="csv-upload" id="csv-upload" hidden/>
         <a href="https://www.kaggle.com/datasets?search=clean+dataset" target="_blank">Test it with random datasets from <strong>Kaggle</strong></a>
-        {file && <button id="generate-button" type="submit">Generate</button>}
+        {!!file && <button id="generate-button" type="submit">Generate</button>}
+        {!file && <div id="button-placeholder"></div>}
       </form>
     </>
   )
