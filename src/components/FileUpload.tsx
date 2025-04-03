@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import FileUploadImg from '../assets/file_upload.svg'
 import { FileUploadProps } from "../types/propsTypes"
 
 const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, status, error }) => {
@@ -88,7 +87,6 @@ const FileUpload:React.FC<FileUploadProps> = ({ setData, setError, setStatus, st
       <form style={{ display: status || error ? "none" : "flex" }} id="upload-form" onSubmit={handleSubmit}>
         <h1 id="title">Graph My CSV</h1>
         <p id="description">Upload a csv file and we will generate either histogram, bar, line, or scatter plots based on the given data.<br/>This app is built with Gemini Flash 2.0 Lite</p>
-        {/* <img src={FileUploadImg} width={100} alt="" /> */}
         <label id="upload-button" htmlFor="csv-upload">
           <span id="choose-file-button">Choose a file</span>
           <span>{(file && fileNameClip(file.name)) || "No file selected"}</span>
