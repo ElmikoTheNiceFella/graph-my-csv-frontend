@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 #upload-button {
   margin-top: 24px;
   border: 2px solid var(--dark);
-  border-radius: 25px;
+  border-radius: 999px;
   width: 400px;
   height: 90px;
   display: flex;
