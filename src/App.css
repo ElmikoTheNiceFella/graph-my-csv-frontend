@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
   all: unset;
   cursor: pointer;
   background-color: var(--dark);
-  border-radius: 10px;
+  border-radius: 99px;
   color: var(--white);
   height: 50px;
   text-align: center;
