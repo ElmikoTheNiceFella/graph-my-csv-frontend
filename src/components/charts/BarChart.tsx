@@ -5,8 +5,7 @@ import { ChartPropsType } from '../../types/propsTypes'
 type Tooltip = { visible: boolean, x: number, y: number, value: [string, number] }
 
 const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequency }) => {
-  try {
-    if (!usingFrequency) return <></>
+    if (!usingFrequency) return <p>No freq</p>
   
     /**
      * Creates a frequency array, this function is shared between all types of graphs
@@ -32,7 +31,7 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequ
     let frequencyArray
     try {
       frequencyArray = getFrequency(data[info['x-axis']])
-    } catch {
+    } catch (e) {
       console.log(data, info['x-axis'], data[info['x-axis']])
       return <></>
     }
@@ -41,7 +40,7 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequ
     const yAxisData = frequencyArray.map(v => v[1])
   
     const extent = d3.extent(yAxisData)
-    if (extent[0] === undefined || extent[1] === undefined) return <></>
+    if (extent[0] === undefined || extent[1] === undefined) return <p>Shit ass extent</p>
   
     const x = d3.scaleBand(xAxisData, [transforms.ml, transforms.w - transforms.mr]);
     let y = d3.scaleLinear(extent, [transforms.h - transforms.mb, transforms.mt]);
@@ -94,9 +93,6 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequ
         </div>
       </>
     )
-  } catch {
-    return <></>
-  }
 }
 
 export default BarChart

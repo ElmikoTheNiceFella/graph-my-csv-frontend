@@ -2,7 +2,7 @@ import { RenderGraphsPropsType } from "../types/propsTypes"
 import { BarChart, LineChart, ScatterplotChart } from "./charts"
 import HistogramChart from "./charts/HistogramChart"
 
-type DataType = { 'graph': string, 'y-axis': string, 'x-axis': string, 'relationship': string, 'time-format'?: string | null }
+type DataType = { 'graph': string, 'y-axis': string, 'x-axis': string, 'relationship': string, 'time-format'?: string }
 
 const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
 
@@ -67,12 +67,7 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
     <>
       {llmResponse.map((plot:DataType) => 
         plot.graph.includes("bar") ?
-          <BarChart data={data} info={{
-            "graph": "bar",
-            "x-axis": "Company Name",
-            "y-axis": "frequency",
-            "relationship": "Shows the distribution of mobile phone models across different companies."
-          }}
+          <BarChart data={data} info={plot}
             transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }}
             usingFrequency={true} />
       : plot.graph.includes("line") ?
@@ -80,34 +75,18 @@ const RenderGraphs: React.FC<RenderGraphsPropsType> = ({ rawData }) => {
             usingFrequency={false}
             data={data}
             extractNumber={extractNumber}
-            info={{
-              "graph": "line",
-              "x-axis": "Period",
-              "y-axis": "Average_cost",
-              "relationship": "Average cost trend over time.  Illustrates how the average cost fluctuates across periods.",
-              "time-format": "%m.%d.%Y"
-            }}
+            info={plot}
             transforms={{ w: 1000, h: 500, mt: 10, mr: 10, mb: 10, ml: 50, p: 4 }} />
       : plot.graph.includes("scatter") ?
           <ScatterplotChart data={data}
-            info={{
-              "graph": "scatterplot",
-              "x-axis": "Average_cost",
-              "y-axis": "Revenue",
-              "relationship": "Relationship between average cost and revenue.  Investigates if higher costs correlate with revenue changes."
-            }}
+            info={plot}
             getPairs={getPairs}
             extractNumber={extractNumber}
             transforms={defaultTransforms}
             usingFrequency={false} />
       : plot.graph.includes("hist") ?
           <HistogramChart data={data}
-            info={{
-              "graph": "histogram",
-              "x-axis": "Age",
-              "y-axis": "frequency",
-              "relationship": "This would show the distribution of ages. You could see the average age, the spread of ages, and any potential outliers."
-            }}
+            info={plot}
             getPairs={getPairs}
             extractNumber={extractNumber}
             transforms={defaultTransforms}
