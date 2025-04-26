@@ -43,7 +43,7 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequ
   
     const x = d3.scaleBand(xAxisData, [transforms.ml, transforms.w - transforms.mr]);
     let y = d3.scaleLinear(extent, [transforms.h - transforms.mb, transforms.mt]);
-    const tickDifference = y.ticks()[0]
+    const tickDifference = y.ticks().length > 0 ? y.ticks()[1] - y.ticks()[0] : 0;
     extent[1] += tickDifference - extent[1] % tickDifference
     y = d3.scaleLinear(extent, [transforms.h - transforms.mb, transforms.mt]);
   

@@ -36,7 +36,7 @@ const LineChart: React.FC<ChartPropsType> = ({ data, info, extractNumber, transf
   
     const x = d3.scaleTime(xExtent, [transforms.ml, transforms.w - transforms.mr]);
     let y = d3.scaleLinear(yExtent, [transforms.h - transforms.mb, transforms.mt]);
-    const tickDifference = y.ticks()[0]
+    const tickDifference = y.ticks().length > 0 ? y.ticks()[1] - y.ticks()[0] : 0;
     yExtent[1] += tickDifference - yExtent[1] % tickDifference
     y = d3.scaleLinear(yExtent, [transforms.h - transforms.mb, transforms.mt]);
   
