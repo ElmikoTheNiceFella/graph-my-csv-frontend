@@ -23,16 +23,24 @@ const ScatterplotChart: React.FC<ChartPropsType> = ({ data, info, transforms, us
     const xAxisData = uncheckedXAxisData as number[]
     const yAxisData = uncheckedYAxisData as number[]
   
-    const xExtent = d3.extent(xAxisData)
+    let xExtent = d3.extent(xAxisData)
     if (xExtent[0] === undefined || xExtent[1] === undefined) return <></>
-    const yExtent = d3.extent(yAxisData)
+    if (xExtent[0] === xExtent[1]) {
+      xExtent = [xExtent[0] - 1, xExtent[1] + 1];
+    }
+    let yExtent = d3.extent(yAxisData)
     if (yExtent[0] === undefined || yExtent[1] === undefined) return <></>
+    if (yExtent[0] === yExtent[1]) {
+      yExtent = [yExtent[0] - 1, yExtent[1] + 1];
+    }
   
     let x = d3.scaleLinear(xExtent, [transforms.ml, transforms.w - transforms.mr]);
     let y = d3.scaleLinear(yExtent, [transforms.h - transforms.mb, transforms.mt]);
     
-    const xTickDifference = x.ticks()[0]
-    const yTickDifference = y.ticks()[0]
+    const xTickValues = x.ticks();
+    const yTickValues = y.ticks();
+    const xTickDifference = xTickValues.length > 0 ? xTickValues[1] - xTickValues[0] : 1;
+    const yTickDifference = yTickValues.length > 0 ? yTickValues[1] - yTickValues[0] : 1;
   
     xExtent[1] += xTickDifference - xExtent[1] % xTickDifference
     yExtent[1] += yTickDifference - yExtent[1] % yTickDifference
@@ -88,7 +96,7 @@ const ScatterplotChart: React.FC<ChartPropsType> = ({ data, info, transforms, us
       </>
     )
   } catch {
-    return <></>
+    return <p></p>
   }
 }
 

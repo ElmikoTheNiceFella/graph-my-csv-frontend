@@ -30,7 +30,6 @@ const HistogramChart: React.FC<ChartPropsType> = ({ data, info, transforms, usin
     const bin = d3.bin().domain(x.domain() as [number, number]).thresholds(x.ticks(d3.min([10, Math.floor(xAxisData.length/2)])));
     
     const finalData = bin(xAxisData)
-    console.log(finalData)
   
     let maxVal = 0
     for(let arr of finalData) {
@@ -70,9 +69,7 @@ const HistogramChart: React.FC<ChartPropsType> = ({ data, info, transforms, usin
           <svg width={transforms.w + transforms.ml + transforms.mr} height={transforms.h + transforms.mt + transforms.mb}>
             <g ref={gx} className="axis" transform={`translate(0, ${transforms.h - transforms.mb})`} />
             <g ref={gy} className="axis" transform={`translate(${transforms.ml}, 0)`} />
-            {finalData.map((bin, i) => {
-                console.log(bin, bin.length)
-                return <rect
+            {finalData.map((bin, i) => <rect
                   key={info['x-axis'] + " " + info['y-axis'] + i} 
                   className="histogram-bar"
                   x={x(bin.x0 || 0)} // Corrected from x(bin[0])
@@ -81,7 +78,7 @@ const HistogramChart: React.FC<ChartPropsType> = ({ data, info, transforms, usin
                   height={(transforms.h - transforms.mb) - y(bin.length)}
                   onMouseEnter={(e) => handleTooltip(e, bin.length)}
                   onMouseMove={(e) => handleTooltip(e, bin.length)}
-                  onMouseLeave={() => setTooltip({ visible: false, x: 0, y: 0, value: ["", 0] })} />})}
+                  onMouseLeave={() => setTooltip({ visible: false, x: 0, y: 0, value: ["", 0] })} />)}
                 
             </svg>
         </div>

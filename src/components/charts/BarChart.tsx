@@ -32,7 +32,6 @@ const BarChart: React.FC<ChartPropsType> = ({ data, info, transforms, usingFrequ
     try {
       frequencyArray = getFrequency(data[info['x-axis']])
     } catch (e) {
-      console.log(data, info['x-axis'], data[info['x-axis']])
       return <></>
     }
   
