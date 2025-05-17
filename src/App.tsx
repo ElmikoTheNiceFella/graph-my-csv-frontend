@@ -11,7 +11,7 @@ const App = () => {
 
   useEffect(() => {
     (async() => {
-      await fetch(import.meta.env.VITE_ENDPOINT, {
+      await fetch(import.meta.env.VITE_ENDPOINT+"/ping", {
         method: "GET"
       })
     })()
