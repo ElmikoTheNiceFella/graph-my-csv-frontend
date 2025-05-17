@@ -10,9 +10,12 @@ const App = () => {
   const [status, setStatus] = useState<string>("")
 
   useEffect(() => {
-    console.log(error)
-    console.log(data)
-  }, [data, error])
+    (async() => {
+      await fetch(import.meta.env.VITE_ENDPOINT, {
+        method: "GET"
+      })
+    })()
+  }, [])
 
   return (
     <>
