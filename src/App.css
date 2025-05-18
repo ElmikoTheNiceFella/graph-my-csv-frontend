@@ -21,6 +21,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-style: normal;
+  text-align: center;
 }
 #title {
   font-size: 56px;
@@ -113,6 +114,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .end {
   text-align: center;
+  display: block;
   padding: 24px;
   color: var(--dark);
 }
